@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+</head>
+<body>
+
+    <h1>Página de Cadastro</h1>
+
+    <form>
+
+        <fieldset>
+
+            <legend>Crie sua Conta</legend>
+
+            <p>
+            Nome
+            <input type="text">
+            </p>
+
+            Email
+            <input type="email" required>
+            <br><br>
+            Senha
+            <input type="password" required minlength="8">
+            <br><br>
+
+            <b>Gênero</b>
+            <br><br>
+
+            <input type="radio" name="genero" value="masculino"> Masculino
+            <br>
+            <input type="radio" name="genero" value="feminino"> Feminino
+            <br>
+            <input type="radio" name="genero" value="Outros"> Outros
+            <br><br>
+
+            Biografia
+            <br>
+            <textarea placeholder="Fale um pouco sobre você..." rows="4"></textarea>
+            <br><br>
+
+            <input type="checkbox" required> Aceito os termos de uso
+            <br><br>
+
+        </fieldset>
+
+        <p>
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Redefinir">
+        </p>
+
+    </form>
+
+</body>
+</html>
