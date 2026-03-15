@@ -1,0 +1,106 @@
+/* reset básico para evitar espaçamentos padrão */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* cor de fundo da página */
+body{
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
+
+
+/* estilo do menu */
+nav ul{
+    list-style: none; /* remove bolinhas da lista */
+}
+
+nav li{
+    display: inline; /* deixa os itens lado a lado */
+    margin-right: 15px;
+}
+
+
+/* estilo dos links do menu */
+nav a{
+    text-decoration: none; /* remove sublinhado */
+    color: black;
+}
+
+
+/* efeito quando passa o mouse */
+nav a:hover{
+    color: blue;
+}
+
+
+/* estilo do artigo (card) */
+article{
+    background-color: white;
+    max-width: 700px;
+    margin: 40px auto; /* centraliza */
+    padding: 20px; /* espaço interno */
+    border: 1px solid #ccc; /* borda leve */
+}
+
+
+/* título do post */
+article h2{
+    font-size: 28px;
+    color: darkblue;
+}
+
+
+/* texto dos parágrafos */
+article p{
+    color: #444;
+    margin-top: 10px;
+}
+
+
+/* imagem do artigo */
+figure img{
+    width: 100%;
+}
+
+
+/* rodapé */
+footer{
+    text-align: center;
+    margin-top: 40px;
+}/* estilo da area de posts relacionados */
+aside{
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+
+/* remove bolinhas da lista */
+aside ul{
+    list-style: none;
+}
+
+
+/* espaço entre os links */
+aside li{
+    margin-top: 8px;
+}
+
+
+/* estilo dos links */
+aside a{
+    text-decoration: none;
+    color: darkblue;
+}
+
+
+/* efeito quando passa o mouse */
+aside a:hover{
+    text-decoration: underline;
+}
