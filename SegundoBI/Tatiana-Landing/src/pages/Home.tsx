@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 
 import Logo from "../assets/logo2.svg";
 import Menu from "../assets/menu.svg";
@@ -153,6 +154,11 @@ const extraServices = [
 export default function Home() {
 
     const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [contactFeedback, setContactFeedback] = useState("");
+    const [contactError, setContactError] = useState(false);
+    const [isSendingEmail, setIsSendingEmail] = useState(false);
 
     useEffect(() => {
 
@@ -164,6 +170,40 @@ export default function Home() {
 
     }, [showMobileMenu]);
 
+
+    async function sendContactEmail(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setIsSendingEmail(true);
+        setContactFeedback("");
+        setContactError(false);
+
+        try {
+            const response = await fetch("/api/send-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, message }),
+            });
+
+            const data = await response.json().catch(() => ({
+                message: "Nao foi possivel enviar a mensagem.",
+            }));
+
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
+
+            setEmail("");
+            setMessage("");
+            setContactFeedback("Mensagem enviada com sucesso!");
+        } catch (error) {
+            setContactError(true);
+            setContactFeedback(error instanceof Error ? error.message : "Nao foi possivel enviar a mensagem.");
+        } finally {
+            setIsSendingEmail(false);
+        }
+    }
     return (
         <>
             {/* HEADER */}
@@ -768,20 +808,36 @@ export default function Home() {
                     </p>
                 </header>
 
-                <form onSubmit={(event) => event.preventDefault()}>
+                <form onSubmit={sendContactEmail}>
                     <input
                         type="email"
                         placeholder="Seu melhor Email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        required
                     />
 
-                    <input
-                        type="text"
+                    <textarea
                         placeholder="Motivo do contato. Ex: Gostei muito do resultado, poderia me enviar um orçamento?"
+                        value={message}
+                        onChange={(event) => setMessage(event.target.value)}
+                        required
                     />
 
-                    <Button text="Enviar" />
-                </form>
+                    <button
+                        className="btn-primary"
+                        type="submit"
+                        disabled={isSendingEmail}
+                    >
+                        {isSendingEmail ? "Enviando..." : "Enviar"}
+                    </button>
 
+                    {contactFeedback && (
+                        <p className={contactError ? "form-message error" : "form-message success"}>
+                            {contactFeedback}
+                        </p>
+                    )}
+                </form>
                 <div className="contact-actions">
                     <a
                         className="btn-primary"
@@ -858,6 +914,7 @@ export default function Home() {
         </>
     );
 }
+
 
 
 
