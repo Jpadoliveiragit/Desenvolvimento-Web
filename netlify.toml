@@ -1,4 +1,4 @@
-﻿[build]
+[build]
   base = "SegundoBI/Tatiana-Landing"
   command = "npm run build"
   publish = "dist"
