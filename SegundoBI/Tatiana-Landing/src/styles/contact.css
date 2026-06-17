@@ -72,16 +72,3 @@
     cursor: not-allowed;
 }
 
-#contact .form-message {
-    margin: 0;
-    font-size: var(--fs-sm);
-    font-weight: var(--fw-bold);
-}
-
-#contact .form-message.success {
-    color: #2f7d4a;
-}
-
-#contact .form-message.error {
-    color: #b84a4a;
-}

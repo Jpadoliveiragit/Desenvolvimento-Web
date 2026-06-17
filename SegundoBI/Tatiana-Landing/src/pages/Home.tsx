@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
+import { toast } from "react-toastify";
 
 import Logo from "../assets/logo2.svg";
 import Menu from "../assets/menu.svg";
@@ -157,8 +158,6 @@ export default function Home() {
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const [contactFeedback, setContactFeedback] = useState("");
-    const [contactError, setContactError] = useState(false);
     const [isSendingEmail, setIsSendingEmail] = useState(false);
 
     // Quando o menu abre no celular, trava a rolagem da página no fundo.
@@ -177,8 +176,6 @@ export default function Home() {
     async function sendContactEmail(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsSendingEmail(true);
-        setContactFeedback("");
-        setContactError(false);
 
         try {
             // Essa rota é redirecionada pelo netlify.toml para netlify/functions/send-email.ts.
@@ -200,10 +197,13 @@ export default function Home() {
 
             setEmail("");
             setMessage("");
-            setContactFeedback("Mensagem enviada com sucesso!");
+            toast.success("Mensagem enviada com sucesso!");
         } catch (error) {
-            setContactError(true);
-            setContactFeedback(error instanceof Error ? error.message : "Nao foi possivel enviar a mensagem.");
+            const errorMessage = error instanceof Error
+                ? error.message
+                : "Nao foi possivel enviar a mensagem.";
+
+            toast.error(errorMessage);
         } finally {
             setIsSendingEmail(false);
         }
@@ -836,11 +836,6 @@ export default function Home() {
                         {isSendingEmail ? "Enviando..." : "Enviar"}
                     </button>
 
-                    {contactFeedback && (
-                        <p className={contactError ? "form-message error" : "form-message success"}>
-                            {contactFeedback}
-                        </p>
-                    )}
                 </form>
                 <div className="contact-actions">
                     <a
