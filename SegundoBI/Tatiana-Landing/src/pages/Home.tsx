@@ -6,9 +6,9 @@ import Menu from "../assets/menu.svg";
 import Close from "../assets/Close.svg";
 
 import Champion from "../assets/champion.svg";
-import ProfileImageOne from "../assets/profileOne.svg";
-import ProfileImageTwo from "../assets/profileTwo.svg";
-import ProfileImageThree from "../assets/profileThree.svg";
+import ProfileImageOne from "../assets/depoimentos/depoimento-1.png";
+import ProfileImageTwo from "../assets/depoimentos/depoimento-2.png";
+import ProfileImageThree from "../assets/depoimentos/depoimento-3.png";
 import Check from "../assets/check.svg";
 import VolumeBrasileiroOne from "../assets/procedimentos/volume-brasileiro-1.jpg";
 import VolumeBrasileiroTwo from "../assets/procedimentos/volume-brasileiro-2.jpg";
@@ -35,7 +35,7 @@ import "../styles/pricing.css";
 import "../styles/contact.css";
 import "../styles/footer.css";
 
-// Dados usados nos cards de depoimentos
+// Lista com os depoimentos que aparecem no carrossel da section testimonials
 const testimonials = [
     {
         image: ProfileImageOne,
@@ -60,12 +60,12 @@ const testimonials = [
     }
 ];
 
-// Links usados nos botões de contato
+// Links principais usados nos botões de agendamento e localização
 const whatsappLink = "https://wa.me/554497662589?text=Ola%2C%20gostaria%20de%20agendar%20um%20procedimento.";
 
 const mapsLink = "https://www.google.com/maps/place/24%C2%B032'47.7%22S+52%C2%B059'26.0%22W/@-24.5465784,-52.9931305,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-24.5465833!4d-52.9905556?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D";
 
-// Informações dos procedimentos principais
+// Dados dos procedimentos principais. Cada item vira um card na parte de preços
 const procedures = [
     {
         name: "Volume Brasileiro",
@@ -123,7 +123,7 @@ const procedures = [
     }
 ];
 
-// Serviços extras que aparecem depois dos volumes
+// Serviços menores que ficam abaixo dos cards principais
 const extraServices = [
     {
         name: "Design de Sobrancelhas",
@@ -153,6 +153,7 @@ const extraServices = [
 
 export default function Home() {
 
+    // Controla o menu mobile e os campos do formulário de contato.
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
@@ -160,6 +161,7 @@ export default function Home() {
     const [contactError, setContactError] = useState(false);
     const [isSendingEmail, setIsSendingEmail] = useState(false);
 
+    // Quando o menu abre no celular, trava a rolagem da página no fundo.
     useEffect(() => {
 
         const html = document.querySelector("html");
@@ -171,6 +173,7 @@ export default function Home() {
     }, [showMobileMenu]);
 
 
+    // Envia o contato para a Netlify Function responsável pelo e-mail.
     async function sendContactEmail(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsSendingEmail(true);
@@ -178,6 +181,7 @@ export default function Home() {
         setContactError(false);
 
         try {
+            // Essa rota é redirecionada pelo netlify.toml para netlify/functions/send-email.ts.
             const response = await fetch("/api/send-email", {
                 method: "POST",
                 headers: {
@@ -206,7 +210,7 @@ export default function Home() {
     }
     return (
         <>
-            {/* HEADER */}
+            {/* HEADER - menu principal da landing page */}
 
             <header className="container py-sm">
 
@@ -281,7 +285,7 @@ export default function Home() {
 
                     </div>
 
-                    {/* MOBILE MENU */}
+                    {/* MOBILE MENU - aparece somente em telas menores */}
 
                     <div className="mobile-menu">
 
@@ -394,7 +398,7 @@ export default function Home() {
 
             </header>
 
-            {/* HERO */}
+            {/* HERO - primeira dobra do site */}
 
             <section id="hero">
 
@@ -439,7 +443,7 @@ export default function Home() {
 
             </section>
 
-            {/* SOLUTION */}
+            {/* SOLUTION - cards explicando os diferenciais do atendimento */}
 
             <section
                 className="container"
@@ -474,7 +478,7 @@ export default function Home() {
 
                 <section className="even-columns">
 
-                    {/* CARD 1 */}
+                    {/* Primeiro card de diferencial */}
 
                     <div className="card">
 
@@ -508,7 +512,7 @@ export default function Home() {
 
                     </div>
 
-                    {/* CARD 2 */}
+                    {/* Segundo card de diferencial */}
 
                     <div className="card">
 
@@ -541,7 +545,7 @@ export default function Home() {
 
                     </div>
 
-                    {/* CARD 3 */}
+                    {/* Terceiro card de diferencial */}
 
                     <div className="card">
 
@@ -578,7 +582,7 @@ export default function Home() {
 
             </section>
 
-            {/* TESTIMONIALS */}
+            {/* TESTIMONIALS - depoimentos seguindo a estrutura do guia */}
 
             <section id="testimonials">
 
@@ -640,7 +644,7 @@ export default function Home() {
 
             </section>
 
-            {/* PRICING */}
+            {/* PRICING - catálogo de procedimentos e valores */}
 
             <section id="pricing" className="container">
 
@@ -661,7 +665,7 @@ export default function Home() {
 
                 <section className="even-columns gap-1.5 pricing-grid">
 
-                    {/* Cards criados a partir da lista de procedimentos */}
+                    {/* Aqui percorro a lista procedures para montar os cards sem repetir muito HTML */}
 
                     {procedures.map((procedure, index) => (
                         <div
@@ -762,7 +766,7 @@ export default function Home() {
                 </section>
 
                 <section className="pricing-notes">
-                    {/* Regras importantes do catálogo */}
+                    {/* Informações gerais do catálogo que ajudam a cliente antes de agendar */}
                     <div>
                         <h3>Manutenção</h3>
                         <p>
@@ -790,7 +794,7 @@ export default function Home() {
 
             </section>
 
-            {/* CONTACT */}
+            {/* CONTACT - formulário integrado com a Netlify Function */}
 
             <section id="contact" className="container">
                 <header>
@@ -859,7 +863,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* FOOTER */}
+            {/* FOOTER - fechamento com links rápidos e WhatsApp */}
 
             <footer>
                 <section className="container footer-content">
